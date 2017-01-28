@@ -39,3 +39,4 @@ angular.module('myApp', [])
       $scope.greeting = 'You typed: ' + $scope.name;
     };
   });
+console.log('Welcome to my Serverless SPA');
