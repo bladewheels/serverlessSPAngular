@@ -1,5 +1,22 @@
 'use strict';
 
+var testTemplateContents,
+  getTemplates = function() {
+    var xhr = new XMLHttpRequest();
+    function onReadyStateChange() {
+      if (xhr.readyState == 4) {
+        console.log(xhr.response);
+        testTemplateContents = xhr.response;
+      }
+    }
+    var remoteHtml = 'https://raw.githubusercontent.com/bladewheels/serverlessSPAngular/master/app/templates/test.html';
+    xhr.onreadystatechange = onReadyStateChange;
+    xhr.open('GET', remoteHtml);
+    xhr.send();
+  };
+
+getTemplates();
+
 chrome.runtime.onInstalled.addListener(details => {
   console.log('previousVersion', details.previousVersion);
 });
@@ -12,20 +29,10 @@ console.log('\'Allo \'Allo! Event Page for Page Action');
 
 chrome.runtime.onMessage.addListener(function(requestMessage,sender,sendResponse)
 {
-  console.log('requestMessage: ' + requestMessage.data + ', received from Tab: ' + sender.tab.id);
-
-  var xhr = new XMLHttpRequest();
-  function onReadyStateChange() {
-    if (xhr.readyState == 4) {
-      console.log(xhr.response);
-      sendResponse({'data': { markup: xhr.response } });
-    }
+  while (!testTemplateContents)
+  {
+    console.log('Waiting for xhr.response');
   }
-  var remoteHtml = 'https://raw.githubusercontent.com/bladewheels/serverlessSPAngular/master/app/templates/test.html';
-  xhr.onreadystatechange = onReadyStateChange;
-  xhr.open('GET', remoteHtml);
-  xhr.send();
-
-  // sendResponse({'data': 'Test message Y, received from Tab: ' + sender.tab.id});
+  sendResponse({'data': { markup: testTemplateContents } });
 
 });
