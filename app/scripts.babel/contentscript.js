@@ -30,6 +30,7 @@ function loadAngularUI()
 
   $('<h1>Computed result: {{greeting}}</h1>').appendTo($ctrlDiv);
   $('<h2>Input value: {{name}}</h2>').appendTo($ctrlDiv);
+  // $('<ng-include src="includedHtmlURL"></ng-include>').appendTo($ctrlDiv);
 }
 
 loadAngularUI();
@@ -38,5 +39,14 @@ angular.module('myApp', [])
     $scope.nameChanged = function () {
       $scope.greeting = 'You typed: ' + $scope.name;
     };
+    // $scope.includedHtmlURL = 'https://raw.githubusercontent.com/bladewheels/serverlessSPAngular/master/app/popup.html';
+    // $scope.includedHtmlURL = 'scripts/includedHtml.js';
   });
 console.log('Welcome to my Serverless SPA');
+
+chrome.runtime.sendMessage(
+  /* extensionId, */
+  { 'data':'foof'},
+  function(responseMessage) {
+    console.log('responseMessage: ' + responseMessage.data);
+  });

@@ -10,6 +10,7 @@ Google will sync data across instances if you login to Chrome (w/Google ID) from
 
 (rough) Install notes:
 install Node, Bower, gulp~~, maybe yeoman?~~
+
 * npm install
 * bower install
 * gulp watch
