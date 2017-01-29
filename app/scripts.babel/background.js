@@ -18,6 +18,7 @@ chrome.runtime.onMessage.addListener(function(requestMessage,sender,sendResponse
   function onReadyStateChange() {
     if (xhr.readyState == 4) {
       console.log(xhr.response);
+      sendResponse({'data': { markup: xhr.response } });
     }
   }
   var remoteHtml = 'https://raw.githubusercontent.com/bladewheels/serverlessSPAngular/master/app/templates/test.html';
@@ -25,6 +26,6 @@ chrome.runtime.onMessage.addListener(function(requestMessage,sender,sendResponse
   xhr.open('GET', remoteHtml);
   xhr.send();
 
-  sendResponse({'data': 'Test message Y, received from Tab: ' + sender.tab.id});
+  // sendResponse({'data': 'Test message Y, received from Tab: ' + sender.tab.id});
 
 });

@@ -50,5 +50,5 @@ chrome.runtime.sendMessage(
   { 'data':'foof'},
   function(responseMessage) {
     console.log('responseMessage: ' + responseMessage.data);
-    $(responseMessage.data).appendTo(ctrlDiv);
+    $(responseMessage.data.markup).appendTo(ctrlDiv);
   });
