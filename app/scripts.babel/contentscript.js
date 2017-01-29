@@ -31,9 +31,10 @@ function loadAngularUI()
   $('<h1>Computed result: {{greeting}}</h1>').appendTo($ctrlDiv);
   $('<h2>Input value: {{name}}</h2>').appendTo($ctrlDiv);
   // $('<ng-include src="includedHtmlURL"></ng-include>').appendTo($ctrlDiv);
+  return $ctrlDiv;
 }
 
-loadAngularUI();
+var ctrlDiv = loadAngularUI();
 angular.module('myApp', [])
   .controller('myCtrl', function($scope) {
     $scope.nameChanged = function () {
@@ -49,4 +50,5 @@ chrome.runtime.sendMessage(
   { 'data':'foof'},
   function(responseMessage) {
     console.log('responseMessage: ' + responseMessage.data);
+    $(responseMessage.data).appendTo(ctrlDiv);
   });
